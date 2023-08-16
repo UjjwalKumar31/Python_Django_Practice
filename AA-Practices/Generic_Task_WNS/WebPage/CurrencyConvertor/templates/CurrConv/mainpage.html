@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter To USD</title>
+    {% load static %}
+    <link href="{% static 'CurrConv/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <table id="CurrencyConversionTable">
+        <caption id = "caption">Currency Converter - To USD</caption>
+        <thead>
+            <th> Currency Name </th>
+            <th> Rate Of Exchange </th>
+            <th> Amount </th>
+            <th> Converted Amount </th>           
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select onchange="updateCellValue(this)">
+                        <option value="">Select an option</option>                        
+                        {%for rec in entries%}
+                            <option value={{rec.RoE}}>
+                                {{rec.Currency_name}}
+                            </option>
+                        {% endfor %}
+                        
+                    </select>
+                </td>
+                <td id="auto-filled-cell"></td>
+                <td>
+                    <input type="number" name="Amount" id="Amount" class="Amount" value="" onkeyup= "Amount(this)"/>
+                </td>
+                <td class="ConvertedAmount">0</td>
+            </tr>
+            <tr>
+                <td>
+                    <select onchange="updateCellValue2(this)">
+                        <option value="">Select an option</option>                  
+                        {%for rec in entries%}
+                            <option value={{rec.RoE}} onselect="RoE(this)">
+                                {{rec.Currency_name}}
+                            </option>
+                        {% endfor %}
+                        
+                    </select>
+                </td>
+                <td id="auto-filled-cell2"></td>
+                <td>
+                    <input type="number" name="Amount" id="Amount" class="Amount" value="" onkeyup= "Amount(this)"/>
+                </td>
+                <td class="ConvertedAmount">0</td>
+            </tr>
+            <tr>
+                <td>
+                    <select onchange="updateCellValue3(this)">
+                        <option value="">Select an option</option>                  
+                        {%for rec in entries%}
+                            <option value={{rec.RoE}} onselect="RoE(this)">
+                                {{rec.Currency_name}}
+                            </option>
+                        {% endfor %}
+                        
+                    </select>
+                </td>
+                <td id="auto-filled-cell3"></td>
+                <td>
+                    <input type="number" name="Amount" id="Amount" class="Amount" value="" onkeyup= "Amount(this)"/>
+                </td>
+                <td class="ConvertedAmount">0</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan = "3" id='hvalue'>Highest Value</th>
+                <td id="total"> 0 </td>
+            </tr>
+        </tfoot>
+    </table>
+    
+
+    <script>
+
+        function updateCellValue(selectElement) {
+            selectedOption = selectElement.value; <!-- Declaring integer -->
+            var autoFilledCell = document.getElementById("auto-filled-cell");
+            //var autoFilledCell = selectElement.parentNode.nextElementSibling;
+            autoFilledCell.textContent = selectedOption;
+            
+        }
+
+        function updateCellValue2(selectElement) {
+            selectedOption = selectElement.value; <!-- Declaring integer -->
+            var autoFilledCell = document.getElementById("auto-filled-cell2");
+            //var autoFilledCell = selectElement.parentNode.nextElementSibling;
+            autoFilledCell.textContent = selectedOption;
+            
+        }
+        function updateCellValue3(selectElement) {
+            selectedOption = selectElement.value; <!-- Declaring integer -->
+            var autoFilledCell = document.getElementById("auto-filled-cell3");
+            //var autoFilledCell = selectElement.parentNode.nextElementSibling;
+            autoFilledCell.textContent = selectedOption;
+            
+        }
+
+        {% comment %} function RoE(roe){
+            console.log(roe.parentElement.parentElement.children[1].value)
+            console.log(roe.parentElement.parentElement)
+            var amt = roe.parentElement.parentElement.children[2].value
+            var roee = roe.parentElement.parentElement.children[1].innerHTML
+            //var RoE = document.getElementById("auto-filled-cell").innerHTML;
+            calculation = amt * roee
+            roe.parentElement.parentElement.children[3].innerHTML = parseFloat(calculation).toFixed(2)
+          } {% endcomment %}
+
+        var ConvertedAmount = document.getElementsByClassName("ConvertedAmount");
+        var total = document.getElementById("total")
+        function Amount(amt){
+            console.log(amt.value)
+            var roe = amt.parentElement.parentElement.children[1].innerHTML;
+            //var roe = document.getElementById("auto-filled-cell").innerHTML;
+
+            {% comment %} console.log(amt.value,roe)
+            console.log(amt.parentElement.parentElement.children[2].children[0])
+            console.log(amt.parentElement.parentElement.children[1]){% endcomment %}
+
+            console.log(roe)
+            calculation = amt.value * roe;
+            amt.parentElement.parentElement.children[3].innerHTML = parseFloat(calculation).toFixed(2);
+            console.log(calculation)
+
+            const values = []
+            for(let i =0; i<ConvertedAmount.length; i++){
+                console.log(ConvertedAmount[i])
+                values.push(parseFloat(ConvertedAmount[i].innerHTML))
+            }
+            console.log(values)
+            total.innerHTML = Math.max.apply(null, values).toFixed(2)
+        }
+    </script>
+</body>
+</html>

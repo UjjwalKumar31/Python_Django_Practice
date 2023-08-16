@@ -1,0 +1,20 @@
+body{
+    background-color: bisque;
+}
+
+table{
+    border: 10px;
+    border-color: brown;
+    border-style: solid;
+    border-spacing: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#caption{
+    color: blueviolet;
+    font-size: large;
+}
+#hvalue,#total,#caption{
+    background-color: tomato;
+}

@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Manage</title>
+    {% load static %}
+    <link href="{% static 'datamanage/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <table>
+        <caption id="caption"> Data Manager </caption>
+        <thead>
+            <th> Department </th>
+            <th colspan="2"> Select Dropdown </th>
+            <th> Action </th>
+        </thead>
+        <tbody>
+            <tr id="branchtable">
+                <form action={% url 'branch_disable_active_flag'%} method='post'>
+                    {% csrf_token %}
+                    <td>
+                        <p>Branch Name<p>
+                    </td>
+                    <td colspan="2">
+                        <select id="option" name="branchoption">
+                            <option disabled selected value> select an option </option>
+
+                            {%for rec in BranchEntries%}
+                                {% if rec.ActiveFlag == 1 %}
+                                <div>
+                                    <option value={{rec.BranchID}}>
+                                        {{rec.BranchName}}
+                                    </option>
+                                <div>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="branchbutton" onclick="branch(this)"> Disable </button>
+                    </td>
+                </form>
+            </tr>
+
+            <tr id="brokertable">
+                <form action={% url 'broker_disable_active_flag'%} method='post'>
+                    {% csrf_token %}
+                    <td>
+                        <p>Broker Name<p>
+                    </td>
+                    <td colspan="2">
+                        <select id="option" name="brokeroption">
+                            <option disabled selected> select an option </option>
+
+                            {%for rec in BrokerEntries%}
+                                {% if rec.ActiveFlag == 1 %}
+                                    <option id="broker" value={{rec.BrokerID}}>
+                                        {{rec.BrokerName}}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="brokerbutton"> Disable </button>
+                    </td>
+                </form>
+            </tr>
+
+        </tbody>
+    </table>
+</body>
+</html>
